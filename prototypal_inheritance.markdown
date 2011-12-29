@@ -20,7 +20,7 @@ A prototype is a _fallback_ object:
 
 ```
 
-The steps are very simple: 
+The steps for property lookup (e.g. `me.name`) are very simple: 
 
 1) Look in `me` for a property.  If found, return the value of that property. else, step 2.
 
