@@ -22,9 +22,9 @@ A prototype is a _fallback_ object:
 
 The steps for property lookup (e.g. `me.name`) are very simple: 
 
-1) Look in `me` for a property.  If found, return the value of that property. else, step 2.
+1) Look in `me` for the property.  If found, return the value of that property. else, step 2.
 
-2) Look in `me`'s prototype object.  If found, return the value of that property.
+2) Look in `me`'s prototype object for the property.  If found, return the value of that property.
 
 ## But wait!
 
