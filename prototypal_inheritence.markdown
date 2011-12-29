@@ -28,7 +28,7 @@ The steps are very simple:
 
 ## But wait!
 
-"`person` is an object", I hear you cry, "what if *it* has a prototype?".  Fear not! you simply repeat the steps above for person instead whenever you look in it for an object.  Consider this:
+"`person` is an object", I hear you cry, "what if *it* has a prototype?".  Fear not! you simply repeat the steps above for finding a property in `person`.  Consider this:
 
 ```javascript
     
