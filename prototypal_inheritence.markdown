@@ -23,6 +23,7 @@ A prototype is a _fallback_ object:
 The steps are very simple: 
 
 1) Look in `me` for a property.  If found, return the value of that property. else, step 2.
+
 2) Look in `me`'s prototype object.  If found, return the value of that property.
 
 ## But wait!
@@ -48,10 +49,15 @@ The steps are very simple:
 `me.is_alive // => true` may be a little baffling, but it's really rather simple when you think it through:
 
 1) look for property 'is_alive' on `me`.
+
 2) it hasn't been found, so look on `person`.  
+
 3) it hasn't been found, so look on `animal`.
+
 4) it has been found, so return the value `true` to `person`.
+
 5) `person` returns `true` to `me`.
+
 6) `me` returns `true`.
 
 *N.B. This is just a mental model for thinking about how the lookup works; the actual implementation may vary*
