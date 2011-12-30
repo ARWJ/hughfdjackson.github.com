@@ -1,5 +1,7 @@
 # Prototypes: the short(est possible) story
 
+Javascript _does not have classes_.  Instead, it uses prototypal inheritance to share properties between objects.
+
 Prototypal inheritance is a brilliantly simple concept.  Javascript's syntax, however, often confuses new-comers.  Let's solve that, ehy?
 
 ## What is a prototype?
