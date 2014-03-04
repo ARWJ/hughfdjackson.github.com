@@ -1,0 +1,302 @@
+<!doctype html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]-->
+<!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<title>Why Curry Helps &#8211; Hugh FD Jackson -</title>
+<meta name="description" content="">
+<meta name="keywords" content="javascript, functional, currying">
+<!-- Twitter Cards -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="/images/">
+<meta name="twitter:title" content="Why Curry Helps">
+<meta name="twitter:description" content="">
+<meta name="twitter:creator" content="@hughfdjackson">
+
+<!-- Open Graph -->
+<meta property="og:locale" content="en_US">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Why Curry Helps">
+<meta property="og:description" content="">
+<meta property="og:url" content="/javascript/why-curry-helps/">
+<meta property="og:site_name" content="Hugh FD Jackson -">
+
+
+
+
+
+<link rel="canonical" href="/javascript/why-curry-helps/">
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Hugh FD Jackson - Feed">
+
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Google Webfonts -->
+<link href='http://fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700|PT+Serif:400,700,400italic' rel='stylesheet' type='text/css'>
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.min.css">
+
+<meta http-equiv="cleartype" content="on">
+
+<!-- HTML5 Shiv and Media Query Support -->
+<!--[if lt IE 9]>
+	<script src="/assets/js/vendor/html5shiv.min.js"></script>
+	<script src="/assets/js/vendor/respond.min.js"></script>
+<![endif]-->
+
+<!-- Modernizr -->
+<script src="/assets/js/vendor/modernizr-2.7.1.custom.min.js"></script>
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="/favicon.ico">
+<!-- 32x32 -->
+<link rel="shortcut icon" href="/favicon.png">
+<!-- 57x57 (precomposed) for iPhone 3GS, pre-2011 iPod Touch and older Android devices -->
+<link rel="apple-touch-icon-precomposed" href="/images/apple-touch-icon-precomposed.png">
+<!-- 72x72 (precomposed) for 1st generation iPad, iPad 2 and iPad mini -->
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="/images/apple-touch-icon-72x72-precomposed.png">
+<!-- 114x114 (precomposed) for iPhone 4, 4S, 5 and post-2011 iPod Touch -->
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="/images/apple-touch-icon-114x114-precomposed.png">
+<!-- 144x144 (precomposed) for iPad 3rd and 4th generation -->
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="/images/apple-touch-icon-144x144-precomposed.png">
+
+</head>
+
+<body class="post">
+
+<!--[if lt IE 9]><div class="browser-upgrade alert alert-info">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div><![endif]-->
+
+<div class="navigation-wrapper">
+	<div class="site-name">
+		<a href="">Hugh FD Jackson -</a>
+	</div><!-- /.site-name -->
+	<div class="top-navigation">
+		<nav role="navigation" id="site-nav" class="nav">
+		    <ul>
+		        
+				<li><a href="/posts/" target="_blank">Posts</a></li>
+		        
+		    </ul>
+		</nav>
+	</div><!-- /.top-navigation -->
+</div><!-- /.navigation-wrapper -->
+
+
+
+<div id="main" role="main">
+  <div class="article-author-side">
+    <img src="/images/bio-pic.jpeg" class="bio-photo" alt="Hugh Jackson bio photo"></a>
+<h3>Hugh Jackson</h3>
+<p>JS Devving, FP loving, NPM module authoring son-of-a-gun. Whipping up tech magic at @zeebox</p>
+<a href="http://twitter.com/hughfdjackson" class="author-social" target="_blank"><i class="icon-twitter"></i> Twitter</a>
+
+
+
+
+
+<a href="http://github.com/hughfdjackson" class="author-social" target="_blank"><i class="icon-github"></i> Github</a>
+
+
+
+
+
+
+  </div>
+  <article>
+    <div class="headline-wrap">
+      <h1>Why Curry Helps</h1>
+    </div><!--/ .headline-wrap -->
+    <div class="article-wrap">
+      <p>A programmer’s pipe-dream is to write code, and be able to use it repeatedly with little effort.  It’s <em>expressive</em> because you write in a way that expresses what is needed, and it’s <em>reuse</em> because.. well, you’re reusing.  What more could you want?</p>
+
+<p><a href="https://npmjs.org/package/curry">curry</a> can help.</p>
+
+<h2 id="what-is-currying-and-why-is-it-so-damn-tasty">What is currying, and why is it so damn tasty?</h2>
+
+<p>Normal function invocation in JavaScript goes something like this:</p>
+
+<div class="highlight"><pre><code class="javascript"><span class="kd">var</span> <span class="nx">add</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">){</span> <span class="k">return</span> <span class="nx">a</span> <span class="o">+</span> <span class="nx">b</span> <span class="p">}</span>
+<span class="nx">add</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="c1">//= 3</span>
+</code></pre></div>
+
+<p>A function takes a number of arguments, and returns a value.  I can call it with too few (with odd results), or too many (where the excess normally get ignored):</p>
+
+<div class="highlight"><pre><code class="javascript"><span class="nx">add</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;IGNORE ME&#39;</span><span class="p">)</span> <span class="c1">//= 3</span>
+<span class="nx">add</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="c1">//= NaN</span>
+</code></pre></div>
+
+<p>A <em>curried</em> function is one where multiple arguments are described by a series of one-argument functions. For example, curried addition would be:</p>
+
+<div class="highlight"><pre><code class="javascript"><span class="kd">var</span> <span class="nx">curry</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;curry&#39;</span><span class="p">)</span>
+<span class="kd">var</span> <span class="nx">add</span> <span class="o">=</span> <span class="nx">curry</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">){</span> <span class="k">return</span> <span class="nx">a</span> <span class="o">+</span> <span class="nx">b</span> <span class="p">})</span>
+<span class="kd">var</span> <span class="nx">add100</span> <span class="o">=</span> <span class="nx">add</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<span class="nx">add100</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="c1">//= 101</span>
+</code></pre></div>
+
+<p>A curried function accepting multiple arguments would be written as:</p>
+
+<div class="highlight"><pre><code class="javascript"><span class="kd">var</span> <span class="nx">sum3</span> <span class="o">=</span> <span class="nx">curry</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">,</span> <span class="nx">c</span><span class="p">){</span> <span class="k">return</span> <span class="nx">a</span> <span class="o">+</span> <span class="nx">b</span> <span class="o">+</span> <span class="nx">c</span> <span class="p">})</span>
+<span class="nx">sum3</span><span class="p">(</span><span class="mi">1</span><span class="p">)(</span><span class="mi">2</span><span class="p">)(</span><span class="mi">3</span><span class="p">)</span> <span class="c1">//= 6</span>
+</code></pre></div>
+
+<p>Since this is ugly in JavaScript’s syntax, <a href="https://npmjs.org/package/curry">curry</a> allows you can also call a function with multiple arguments at once:</p>
+
+<div class="highlight"><pre><code class="javascript"><span class="kd">var</span> <span class="nx">sum3</span> <span class="o">=</span> <span class="nx">curry</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">,</span> <span class="nx">c</span><span class="p">){</span> <span class="k">return</span> <span class="nx">a</span> <span class="o">+</span> <span class="nx">b</span> <span class="o">+</span> <span class="nx">c</span> <span class="p">})</span>
+<span class="nx">sum3</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="c1">//= 6</span>
+<span class="nx">sum3</span><span class="p">(</span><span class="mi">1</span><span class="p">)(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="c1">//= 6</span>
+<span class="nx">sum3</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)(</span><span class="mi">3</span><span class="p">)</span> <span class="c1">//= 6</span>
+</code></pre></div>
+
+<h2 id="so--what">So .. what?</h2>
+
+<p>If you’re not used to languages in which curried functions are part of daily life (<a href="http://learnyouahaskell.com/">Haskell</a> comes to mind), it’s probably not obvious what advantage this gives us.  To my mind, the two main ones are:</p>
+
+<ul>
+  <li>Little pieces can be configured and reused with ease, without clutter;</li>
+  <li>Functions are used throughout.</li>
+</ul>
+
+<h3 id="the-little-pieces">The little pieces</h3>
+
+<p>Let’s take an obvious example; mapping over a collection to get the ids of its members:</p>
+
+<div class="highlight"><pre><code class="javascript"><span class="kd">var</span> <span class="nx">objects</span> <span class="o">=</span> <span class="p">[{</span> <span class="nx">id</span><span class="o">:</span> <span class="mi">1</span> <span class="p">},</span> <span class="p">{</span> <span class="nx">id</span><span class="o">:</span> <span class="mi">2</span> <span class="p">},</span> <span class="p">{</span> <span class="nx">id</span><span class="o">:</span> <span class="mi">3</span> <span class="p">}]</span>
+<span class="nx">objects</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">o</span><span class="p">){</span> <span class="k">return</span> <span class="nx">o</span><span class="p">.</span><span class="nx">id</span> <span class="p">})</span>
+</code></pre></div>
+
+<p>If you’re looking for the REAL logic in that second line, let me pick it out for you:</p>
+
+<blockquote>
+  <p>MAP over OBJECTS to get IDS</p>
+</blockquote>
+
+<p>There’s a lot of implementation cruft in just that line; in the form of the function definition. Let’s clean that up:</p>
+
+<div class="highlight"><pre><code class="javascript"><span class="kd">var</span> <span class="nx">get</span> <span class="o">=</span> <span class="nx">curry</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">property</span><span class="p">,</span> <span class="nx">object</span><span class="p">){</span> <span class="k">return</span> <span class="nx">object</span><span class="p">[</span><span class="nx">property</span><span class="p">]</span> <span class="p">})</span>
+<span class="nx">objects</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">))</span> <span class="c1">//= [1, 2, 3]</span>
+</code></pre></div>
+
+<p>Now we’re talking in terms of the real logic of the operation - map over these objects, getting their ids.  BAM.  What we’ve really created in the <em>get</em> function is a <strong>function that can be partially configured</strong>.</p>
+
+<p>What if we want to re-use the ‘get ids from a list of objects’ functionality, though?  Let’s do it the naive way:</p>
+
+<div class="highlight"><pre><code class="javascript"><span class="kd">var</span> <span class="nx">getIDs</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">objects</span><span class="p">){</span>
+    <span class="k">return</span> <span class="nx">objects</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">))</span>
+<span class="p">}</span>
+<span class="nx">getIDs</span><span class="p">(</span><span class="nx">objects</span><span class="p">)</span> <span class="c1">//= [1, 2, 3]</span>
+</code></pre></div>
+
+<p>Hrm, we seem to be back to cluttery from elegant and terse.  What can we do about this? Ah - what if map could be partially configured with a function, but no collection yet?</p>
+
+<div class="highlight"><pre><code class="javascript"><span class="kd">var</span> <span class="nx">map</span> <span class="o">=</span> <span class="nx">curry</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">fn</span><span class="p">,</span> <span class="nx">value</span><span class="p">){</span> <span class="k">return</span> <span class="nx">value</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">fn</span><span class="p">)</span> <span class="p">})</span>
+<span class="kd">var</span> <span class="nx">getIDs</span> <span class="o">=</span> <span class="nx">map</span><span class="p">(</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">))</span>
+
+<span class="nx">getIDs</span><span class="p">(</span><span class="nx">objects</span><span class="p">)</span> <span class="c1">//= [1, 2, 3]</span>
+</code></pre></div>
+
+<p>We’re starting to see that, if our basic building blocks are curried functions, we can easily create fresh, new functionality from them.  Even more excitingly, the code reads like the logic of the domain you’re working in.</p>
+
+<h3 id="functions-through-and-through">Functions through and through</h3>
+
+<p>Another advantage of this approach is that it encourages the creation of functions; rather than of methods.  While methods are beautiful things - allowing polymorphism, and very readable code - they aren’t always the tool for the job, such as in heavily async code.</p>
+
+<p>In this toy example, let’s ‘get’ some data from a server and process it in some useful way.  The data looks something like this:</p>
+
+<div class="highlight"><pre><code class="javascript"><span class="p">{</span>
+    <span class="s2">&quot;user&quot;</span><span class="o">:</span> <span class="s2">&quot;hughfdjackson&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;posts&quot;</span><span class="o">:</span> <span class="p">[</span>
+        <span class="p">{</span> <span class="s2">&quot;title&quot;</span><span class="o">:</span> <span class="s2">&quot;why curry?&quot;</span><span class="p">,</span> <span class="s2">&quot;contents&quot;</span><span class="o">:</span> <span class="s2">&quot;...&quot;</span> <span class="p">},</span>
+        <span class="p">{</span> <span class="s2">&quot;title&quot;</span><span class="o">:</span> <span class="s2">&quot;prototypes: the short(est possible) story&quot;</span><span class="p">,</span> <span class="s2">&quot;contents&quot;</span><span class="o">:</span> <span class="s2">&quot;...&quot;</span> <span class="p">}</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>Your task is to get the the titles for each of this users posts.  Gogogo!</p>
+
+<div class="highlight"><pre><code class="javascript"><span class="nx">fetchFromServer</span><span class="p">()</span>
+    <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">)</span>
+    <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">){</span> <span class="k">return</span> <span class="nx">data</span><span class="p">.</span><span class="nx">posts</span> <span class="p">})</span>
+    <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">posts</span><span class="p">){</span>
+        <span class="k">return</span> <span class="nx">posts</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">post</span><span class="p">){</span> <span class="k">return</span> <span class="nx">post</span><span class="p">.</span><span class="nx">title</span> <span class="p">})</span>
+    <span class="p">})</span>
+</code></pre></div>
+
+<p>Okay, that wasn’t fair, I rushed you. (Also, I wrote that code on your behalf - perhaps you would solve it more elegantly, but I digress).</p>
+
+<p>Since chains of promises (or, if you prefer, callbacks) fundamentally <em>work</em> with functions, you can’t easily just map over an value when one is available from the server without first wrapping it up in all that visual (and mental) clutter.</p>
+
+<p>Let’s go again, this time using the tools we’ve already defined:</p>
+
+<div class="highlight"><pre><code class="javascript"><span class="nx">fetchFromServer</span><span class="p">()</span>
+    <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">)</span>
+    <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;posts&#39;</span><span class="p">))</span>
+    <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">map</span><span class="p">(</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">)))</span>
+</code></pre></div>
+
+<p>This is lean logic, easily expressed; something we couldn’t achieve nearly so easily without curried functions.</p>
+
+<h1 id="tldr">tl;dr</h1>
+
+<p><a href="https://npmjs.org/package/curry">curry</a> gives you a tantalising amount of expressive power.</p>
+
+<p>I suggest you pick it up, and play around with it.  If you’re familiar with the concept already, I suspect you’ll find the API straight forward and satisfying.  If not, you owe it to yourself and your colleagues to consider it.</p>
+
+      <hr />
+      <footer role="contentinfo">
+        <div class="article-author-bottom">
+          <img src="/images/bio-pic.jpeg" class="bio-photo" alt="Hugh Jackson bio photo"></a>
+<h3>Hugh Jackson</h3>
+<p>JS Devving, FP loving, NPM module authoring son-of-a-gun. Whipping up tech magic at @zeebox</p>
+<a href="http://twitter.com/hughfdjackson" class="author-social" target="_blank"><i class="icon-twitter"></i> Twitter</a>
+
+
+
+
+
+<a href="http://github.com/hughfdjackson" class="author-social" target="_blank"><i class="icon-github"></i> Github</a>
+
+
+
+
+
+
+        </div>
+        <p class="byline"><strong>Why Curry Helps</strong> was published on <time datetime="2013-07-06T00:00:00+01:00">July 06, 2013</time> by <a href="/about" title="About Hugh Jackson">Hugh Jackson</a>.</p>
+      </footer>
+    </div><!-- /.article-wrap -->
+  </article>
+</div><!-- /#main -->
+
+<div class="footer-wrap">
+  <div class="related-articles">
+  <h4>You might also enjoy <small class="pull-right">(<a href="/posts/">View all posts</a>)</small></h4>
+    <ul>
+    
+      <li><a href="/javascript/vars-and-values/" title="Vars And Values">Vars And Values</a></li>
+    
+      <li><a href="/javascript/tapping-into-the-method-chain/" title="Tapping Into The Method Chain">Tapping Into The Method Chain</a></li>
+    
+      <li><a href="/javascript/jslint-is-not-a-code-quality-tool-for-3rd-party-code/" title="Jslint Is Not A Code Quality Tool For 3rd Party Code">Jslint Is Not A Code Quality Tool For 3rd Party Code</a></li>
+    
+    </ul>
+    <hr />
+  </div><!-- /.related-articles -->
+  <footer>
+    <span>&copy; 2014 Hugh Jackson. Powered by <a href="http://jekyllrb.com">Jekyll</a> using the <a href="http://mademistakes.com/minimal-mistakes/">Minimal Mistakes</a> theme.</span>
+
+  </footer>
+</div><!-- /.footer-wrap -->
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+<script src="/assets/js/scripts.min.js"></script>
+	        
+
+</body>
+</html>

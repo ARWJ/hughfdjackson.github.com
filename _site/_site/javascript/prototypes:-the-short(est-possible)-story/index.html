@@ -1,0 +1,287 @@
+<!doctype html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]-->
+<!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<title>Prototypes: The Short(est Possible) Story &#8211; Hugh FD Jackson -</title>
+<meta name="description" content="">
+<meta name="keywords" content="javascript, prototype, prototypal, inheritence, object-orientated, OOP">
+<!-- Twitter Cards -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="/images/">
+<meta name="twitter:title" content="Prototypes: The Short(est Possible) Story">
+<meta name="twitter:description" content="">
+<meta name="twitter:creator" content="@hughfdjackson">
+
+<!-- Open Graph -->
+<meta property="og:locale" content="en_US">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Prototypes: The Short(est Possible) Story">
+<meta property="og:description" content="">
+<meta property="og:url" content="/javascript/prototypes%3A-the-short%28est-possible%29-story/">
+<meta property="og:site_name" content="Hugh FD Jackson -">
+
+
+
+
+
+<link rel="canonical" href="/javascript/prototypes%3A-the-short%28est-possible%29-story/">
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Hugh FD Jackson - Feed">
+
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Google Webfonts -->
+<link href='http://fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700|PT+Serif:400,700,400italic' rel='stylesheet' type='text/css'>
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.min.css">
+
+<meta http-equiv="cleartype" content="on">
+
+<!-- HTML5 Shiv and Media Query Support -->
+<!--[if lt IE 9]>
+	<script src="/assets/js/vendor/html5shiv.min.js"></script>
+	<script src="/assets/js/vendor/respond.min.js"></script>
+<![endif]-->
+
+<!-- Modernizr -->
+<script src="/assets/js/vendor/modernizr-2.7.1.custom.min.js"></script>
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="/favicon.ico">
+<!-- 32x32 -->
+<link rel="shortcut icon" href="/favicon.png">
+<!-- 57x57 (precomposed) for iPhone 3GS, pre-2011 iPod Touch and older Android devices -->
+<link rel="apple-touch-icon-precomposed" href="/images/apple-touch-icon-precomposed.png">
+<!-- 72x72 (precomposed) for 1st generation iPad, iPad 2 and iPad mini -->
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="/images/apple-touch-icon-72x72-precomposed.png">
+<!-- 114x114 (precomposed) for iPhone 4, 4S, 5 and post-2011 iPod Touch -->
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="/images/apple-touch-icon-114x114-precomposed.png">
+<!-- 144x144 (precomposed) for iPad 3rd and 4th generation -->
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="/images/apple-touch-icon-144x144-precomposed.png">
+
+</head>
+
+<body class="post">
+
+<!--[if lt IE 9]><div class="browser-upgrade alert alert-info">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div><![endif]-->
+
+<div class="navigation-wrapper">
+	<div class="site-name">
+		<a href="">Hugh FD Jackson -</a>
+	</div><!-- /.site-name -->
+	<div class="top-navigation">
+		<nav role="navigation" id="site-nav" class="nav">
+		    <ul>
+		        
+				<li><a href="/posts/" target="_blank">Posts</a></li>
+		        
+		    </ul>
+		</nav>
+	</div><!-- /.top-navigation -->
+</div><!-- /.navigation-wrapper -->
+
+
+
+<div id="main" role="main">
+  <div class="article-author-side">
+    <img src="/images/bio-pic.jpeg" class="bio-photo" alt="Hugh Jackson bio photo"></a>
+<h3>Hugh Jackson</h3>
+<p>JS Devving, FP loving, NPM module authoring son-of-a-gun. Whipping up tech magic at @zeebox</p>
+<a href="http://twitter.com/hughfdjackson" class="author-social" target="_blank"><i class="icon-twitter"></i> Twitter</a>
+
+
+
+
+
+<a href="http://github.com/hughfdjackson" class="author-social" target="_blank"><i class="icon-github"></i> Github</a>
+
+
+
+
+
+
+  </div>
+  <article>
+    <div class="headline-wrap">
+      <h1>Prototypes: The Short(est Possible) Story</h1>
+    </div><!--/ .headline-wrap -->
+    <div class="article-wrap">
+      <p>Prototypal inheritance is a brilliantly simple concept.  Javascript’s syntax, however, often confuses new-comers.  Let’s solve that, ehy?</p>
+
+<h2 id="what-is-a-prototype">What is a prototype?</h2>
+
+<p>Javascript <em>does not have classes</em>.  Instead, it uses prototypal inheritance to share properties between objects.</p>
+
+<p>A prototype is just a <em>fallback</em> object.  In Javascript, an object’s fallback object is stored in as an internal property (one that only the engine can access) - commonly referred to as an object’s [[Prototype]] property. Let’s describe it, replacing some steps with comments:</p>
+
+<div class="highlight"><pre><code class="javascript"><span class="c1">// let&#39;s pretend that person is the [[Prototype]] of me :</span>
+<span class="kd">var</span> <span class="nx">person</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">has_legs</span><span class="o">:</span> <span class="kc">true</span> <span class="p">}</span>
+<span class="kd">var</span> <span class="nx">me</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;hugh&quot;</span> <span class="p">}</span>
+
+<span class="c1">// that means :</span>
+<span class="nx">me</span><span class="p">.</span><span class="nx">name</span>         <span class="c1">// =&gt; &quot;hugh&quot;</span>
+<span class="nx">me</span><span class="p">.</span><span class="nx">has_legs</span>     <span class="c1">// =&gt; true</span>
+</code></pre></div>
+
+<p>The steps for property lookup (e.g. <code>me.name</code>) are very simple:</p>
+
+<p>1) Look in <code>me</code> for the property.  If found, return the value of that property. else, step 2.</p>
+
+<p>2) Look in <code>me</code>’s [[Prototype]] object for the property.  If found, return the value of that property.</p>
+
+<h2 id="but-wait">But wait!</h2>
+
+<p>“<code>person</code> is an object”, I hear you cry, “what if <em>it</em> has a [[Prototype]]?”.  Fear not! you simply repeat the steps above for finding a property in <code>person</code>.  Consider this:</p>
+
+<div class="highlight"><pre><code class="javascript"><span class="c1">// let&#39;s pretend that animal is the [[Prototype]] of person :</span>
+<span class="kd">var</span> <span class="nx">animal</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">is_alive</span><span class="o">:</span> <span class="kc">true</span> <span class="p">}</span>
+
+<span class="c1">// and, as before, person is the [[Prototype]] of me :</span>
+<span class="kd">var</span> <span class="nx">person</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">has_legs</span><span class="o">:</span> <span class="kc">true</span> <span class="p">}</span>
+<span class="kd">var</span> <span class="nx">me</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;hugh&quot;</span> <span class="p">}</span>
+
+
+<span class="nx">person</span><span class="p">.</span><span class="nx">is_alive</span>     <span class="c1">// =&gt; true</span>
+<span class="nx">me</span><span class="p">.</span><span class="nx">is_alive</span>         <span class="c1">// =&gt; true</span>
+</code></pre></div>
+
+<p><code>me.is_alive // =&gt; true</code> may be a little baffling, but it’s really rather simple when you think it through:</p>
+
+<p>1) look for property ‘is_alive’ on <code>me</code>.</p>
+
+<p>2) it hasn’t been found, so look on <code>person</code>.</p>
+
+<p>3) it hasn’t been found, so look on <code>animal</code>.</p>
+
+<p>4) it has been found, so return the value <code>true</code> to <code>person</code>.</p>
+
+<p>5) <code>person</code> returns <code>true</code> to <code>me</code>.</p>
+
+<p>6) <code>me</code> returns <code>true</code>.</p>
+
+<p><em>N.B. This is just a mental model for thinking about how the lookup works; the actual implementation may vary</em></p>
+
+<p>This ‘chaining together’ of prototypes is known (unsurprisingly) as the <code>prototype chain</code>.  Think about it! This means you can add a property <em>at any time</em> to <code>person</code> or <code>animal</code> and that will be available on <code>me</code> for all to see.</p>
+
+<h2 id="how-to-use-them">How to use them!</h2>
+
+<p>Up till now we’ve been pretending that <code>person</code> is the [[Prototype]] of <code>me</code>, but it’s all been a lie.  Let’s resolve that:</p>
+
+<h3 id="using-objectcreate">Using Object.create</h3>
+
+<div class="highlight"><pre><code class="javascript"><span class="kd">var</span> <span class="nx">animal</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">is_alive</span><span class="o">:</span> <span class="kc">true</span> <span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">person</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="nx">animal</span><span class="p">)</span>
+<span class="nx">person</span><span class="p">.</span><span class="nx">has_legs</span> <span class="o">=</span> <span class="kc">true</span>
+
+<span class="kd">var</span> <span class="nx">me</span> <span class="o">=</span>  <span class="nb">Object</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="nx">person</span><span class="p">)</span>
+<span class="nx">me</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="s2">&quot;hugh&quot;</span>
+</code></pre></div>
+
+<p>Yup, it really was that straightforwards.  This is the nicer syntax modern JavaScript engines provide us. *</p>
+
+<h3 id="using-constructors">Using Constructors</h3>
+
+<p>This is the older syntax; and is the cause of a lot of the confusion about prototypal inheritance.</p>
+
+<p>Constructors are functions that, when called in conjunction with the <code>new</code> keyword, return a fresh object.  If you want to use a function as a constructor, the convention is to use a capital first letter:</p>
+
+<div class="highlight"><pre><code class="javascript"><span class="kd">function</span> <span class="nx">Person</span><span class="p">(){</span>
+<span class="c1">//  When a function is called with `new`, `this` refers to the object we&#39;re creating.</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">has_legs</span> <span class="o">=</span> <span class="kc">true</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">person</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">()</span>
+
+<span class="nx">person</span><span class="p">.</span><span class="nx">has_legs</span> <span class="c1">// =&gt; true</span>
+</code></pre></div>
+
+<p>So, now we have a <code>person</code> object, how do we make sure that it is the [[Prototype]] of <code>me</code>?  Like so:</p>
+
+<div class="highlight"><pre><code class="javascript"><span class="kd">function</span> <span class="nx">Person</span><span class="p">(){</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">has_legs</span> <span class="o">=</span> <span class="kc">true</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">Me</span><span class="p">(){</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="s2">&quot;hugh&quot;</span>
+<span class="p">}</span>
+<span class="nx">Me</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">()</span>
+
+<span class="kd">var</span> <span class="nx">me</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Me</span><span class="p">()</span>
+
+<span class="nx">me</span><span class="p">.</span><span class="nx">has_legs</span> <span class="c1">// =&gt; true</span>
+<span class="nx">me</span><span class="p">.</span><span class="nx">name</span> <span class="c1">// =&gt; &quot;hugh&quot;</span>
+</code></pre></div>
+
+<p>When you call <code>Me</code> with the <code>new</code> keyword, the fresh object (represented by <code>this</code> inside of the constructor function) has its [[Prototype]] set to Me.prototype.  After that, the body of the <code>Me</code> function is run, and the object represented by <code>this</code> is returned.  <em>Phew</em>.  What a load of confusion that causes.</p>
+
+<p><em>Why did I leave out <code>animal</code> in these examples?  Well, because this technique requires a lot of boilerplate, and I didn’t want to make it any more confusing than necessary.</em></p>
+
+<h2 id="further-reading">Further reading!</h2>
+
+<p>This overview is <em>very</em> short.  Heck, I haven’t even mentioned methods! I wanted to make a super short intro, though, because there is <a href="http://killdream.github.com/blog/2011/10/understanding-javascript-oop/index.html">a really awesome in-depth overview of JavaScript OOP already</a>. This article was intended a light-weight complement to that one.  Go read it.  Now.</p>
+
+<hr />
+
+<p>* <em><a href="http://kangax.github.com/es5-compat-table/">As kangax’ compatibility tables show us</a>, ie8 and lower, ff 3.6 and lower, and even Opera 11.50 lacks support for Object.create.</em></p>
+
+      <hr />
+      <footer role="contentinfo">
+        <div class="article-author-bottom">
+          <img src="/images/bio-pic.jpeg" class="bio-photo" alt="Hugh Jackson bio photo"></a>
+<h3>Hugh Jackson</h3>
+<p>JS Devving, FP loving, NPM module authoring son-of-a-gun. Whipping up tech magic at @zeebox</p>
+<a href="http://twitter.com/hughfdjackson" class="author-social" target="_blank"><i class="icon-twitter"></i> Twitter</a>
+
+
+
+
+
+<a href="http://github.com/hughfdjackson" class="author-social" target="_blank"><i class="icon-github"></i> Github</a>
+
+
+
+
+
+
+        </div>
+        <p class="byline"><strong>Prototypes: The Short(est Possible) Story</strong> was published on <time datetime="2012-01-05T00:00:00+00:00">January 05, 2012</time> by <a href="/about" title="About Hugh Jackson">Hugh Jackson</a>.</p>
+      </footer>
+    </div><!-- /.article-wrap -->
+  </article>
+</div><!-- /#main -->
+
+<div class="footer-wrap">
+  <div class="related-articles">
+  <h4>You might also enjoy <small class="pull-right">(<a href="/posts/">View all posts</a>)</small></h4>
+    <ul>
+    
+      <li><a href="/javascript/why-curry-helps/" title="Why Curry Helps">Why Curry Helps</a></li>
+    
+      <li><a href="/javascript/vars-and-values/" title="Vars And Values">Vars And Values</a></li>
+    
+      <li><a href="/javascript/tapping-into-the-method-chain/" title="Tapping Into The Method Chain">Tapping Into The Method Chain</a></li>
+    
+    </ul>
+    <hr />
+  </div><!-- /.related-articles -->
+  <footer>
+    <span>&copy; 2014 Hugh Jackson. Powered by <a href="http://jekyllrb.com">Jekyll</a> using the <a href="http://mademistakes.com/minimal-mistakes/">Minimal Mistakes</a> theme.</span>
+
+  </footer>
+</div><!-- /.footer-wrap -->
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+<script src="/assets/js/scripts.min.js"></script>
+	        
+
+</body>
+</html>

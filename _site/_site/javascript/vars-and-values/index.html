@@ -1,0 +1,258 @@
+<!doctype html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]-->
+<!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<title>Vars And Values &#8211; Hugh FD Jackson -</title>
+<meta name="description" content="">
+<meta name="keywords" content="javascript, variables, values">
+<!-- Twitter Cards -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="/images/">
+<meta name="twitter:title" content="Vars And Values">
+<meta name="twitter:description" content="">
+<meta name="twitter:creator" content="@hughfdjackson">
+
+<!-- Open Graph -->
+<meta property="og:locale" content="en_US">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vars And Values">
+<meta property="og:description" content="">
+<meta property="og:url" content="/javascript/vars-and-values/">
+<meta property="og:site_name" content="Hugh FD Jackson -">
+
+
+
+
+
+<link rel="canonical" href="/javascript/vars-and-values/">
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Hugh FD Jackson - Feed">
+
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Google Webfonts -->
+<link href='http://fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700|PT+Serif:400,700,400italic' rel='stylesheet' type='text/css'>
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.min.css">
+
+<meta http-equiv="cleartype" content="on">
+
+<!-- HTML5 Shiv and Media Query Support -->
+<!--[if lt IE 9]>
+	<script src="/assets/js/vendor/html5shiv.min.js"></script>
+	<script src="/assets/js/vendor/respond.min.js"></script>
+<![endif]-->
+
+<!-- Modernizr -->
+<script src="/assets/js/vendor/modernizr-2.7.1.custom.min.js"></script>
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="/favicon.ico">
+<!-- 32x32 -->
+<link rel="shortcut icon" href="/favicon.png">
+<!-- 57x57 (precomposed) for iPhone 3GS, pre-2011 iPod Touch and older Android devices -->
+<link rel="apple-touch-icon-precomposed" href="/images/apple-touch-icon-precomposed.png">
+<!-- 72x72 (precomposed) for 1st generation iPad, iPad 2 and iPad mini -->
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="/images/apple-touch-icon-72x72-precomposed.png">
+<!-- 114x114 (precomposed) for iPhone 4, 4S, 5 and post-2011 iPod Touch -->
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="/images/apple-touch-icon-114x114-precomposed.png">
+<!-- 144x144 (precomposed) for iPad 3rd and 4th generation -->
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="/images/apple-touch-icon-144x144-precomposed.png">
+
+</head>
+
+<body class="post">
+
+<!--[if lt IE 9]><div class="browser-upgrade alert alert-info">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div><![endif]-->
+
+<div class="navigation-wrapper">
+	<div class="site-name">
+		<a href="">Hugh FD Jackson -</a>
+	</div><!-- /.site-name -->
+	<div class="top-navigation">
+		<nav role="navigation" id="site-nav" class="nav">
+		    <ul>
+		        
+				<li><a href="/posts/" target="_blank">Posts</a></li>
+		        
+		    </ul>
+		</nav>
+	</div><!-- /.top-navigation -->
+</div><!-- /.navigation-wrapper -->
+
+
+
+<div id="main" role="main">
+  <div class="article-author-side">
+    <img src="/images/bio-pic.jpeg" class="bio-photo" alt="Hugh Jackson bio photo"></a>
+<h3>Hugh Jackson</h3>
+<p>JS Devving, FP loving, NPM module authoring son-of-a-gun. Whipping up tech magic at @zeebox</p>
+<a href="http://twitter.com/hughfdjackson" class="author-social" target="_blank"><i class="icon-twitter"></i> Twitter</a>
+
+
+
+
+
+<a href="http://github.com/hughfdjackson" class="author-social" target="_blank"><i class="icon-github"></i> Github</a>
+
+
+
+
+
+
+  </div>
+  <article>
+    <div class="headline-wrap">
+      <h1>Vars And Values</h1>
+    </div><!--/ .headline-wrap -->
+    <div class="article-wrap">
+      <p>Sometimes I hear JavaScript dev throw around the terms <code>vars</code> and <code>values</code> as synonyms for each other.  Realising that they’re not was a serious <em>‘aha’</em> moment for me - and making the distinction about it can make talking and thinking about code clearer by far.</p>
+
+<h1 id="values">values</h1>
+
+<p>JavaScript values split neatly into two camps - objects and primitives.</p>
+
+<h3 id="primitives">Primitives</h3>
+
+<p><em>Primitives</em> are familiar to us all - in the form of strings, numbers, booleans, <code>null</code> and <code>undefined</code>.  They’re immutable - meaning you <em>cannot</em> alter a value.  If you want to alter one, you have to create a new one by performing some operation on the original.</p>
+
+<p>Primtives implement <em>value equality</em> - two primitives are considered equal, even if they were created separately, if they represent the same logical value: <code>1 === 1</code>.</p>
+
+<h3 id="objects">Objects</h3>
+
+<p><em>Objects</em> are mutable by default, and are most commonly found in the form created by <code>{}</code> or <code>[]</code> - often referred to as objects and arrays (since the forms are sugar for <code>new Object</code> and <code>new Array</code> respectively).  Objects are mutable - meaning that you can alter the very value itself.</p>
+
+<p>Objects implement (what I will term for the sake of convenience) <em>equality by identity</em>.  An object gets a unique identifier on creation, and is only considered to be equal to another object when that unique identifier matches.  Therefore, <code>{ x: 3 } !== { x: 3 }</code>.</p>
+
+<h1 id="vars">vars</h1>
+
+<p>A variable is simply a <em>name</em> for a value within a scope, that can be changed. They can be created by the variable statement, by a function declaration, or via a parameter.  You could think of it as a box that holds an address to a value - it’s a conceptual model that I haven’t managed to break when thinking about JS.</p>
+
+<div class="highlight"><pre><code class="javascript"><span class="c1">// creating variable `a` via the var statement, and assigning the value `1` to it</span>
+<span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="c1">// creating variable `b` via a function declaration,</span>
+<span class="c1">// and the variable `c` as the parameter to that function</span>
+<span class="kd">function</span> <span class="nx">b</span><span class="p">(</span><span class="nx">c</span><span class="p">){</span>
+	<span class="kd">var</span> <span class="nx">d</span> <span class="o">=</span> <span class="s1">&#39;my value&#39;</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<h1 id="just-a-couple-of-examples">Just a couple of examples</h1>
+
+<p>So how does this affect common, every-day situations that you want to talk to others about?</p>
+
+<h2 id="for-loops">for loops</h2>
+
+<p>The primary mechanic of a for loop is by replacing the value held by a var; not from altering the value:</p>
+
+<div class="highlight"><pre><code class="javascript"><span class="k">for</span> <span class="p">(</span> <span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">;</span> <span class="nx">i</span> <span class="o">=</span> <span class="nx">i</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">)</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span>
+</code></pre></div>
+
+<p>In the above example, variable <code>i</code> holds the value <code>0</code> intially.  In each subsequent loop (while the <code>i</code> still holds a value less than 5), the variable is updated to hold a new value, created by operating on the <em>old</em> value.</p>
+
+<h2 id="passing-arguments-to-functions">passing arguments to functions</h2>
+
+<p>When you place a variable in the comma-seperated, parens-encapulated part of a function call, you’re really simply taking the values variables hold, and passing <em>those</em> to a function.</p>
+
+<div class="highlight"><pre><code class="javascript"><span class="kd">var</span> <span class="nx">add</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">){</span> <span class="k">return</span> <span class="nx">a</span> <span class="o">+</span> <span class="nx">b</span> <span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">num1</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="kd">var</span> <span class="nx">num2</span> <span class="o">=</span> <span class="mi">2</span>
+
+<span class="nx">add</span><span class="p">(</span><span class="nx">num1</span><span class="p">,</span> <span class="nx">num2</span><span class="p">)</span> <span class="c1">//= 3</span>
+</code></pre></div>
+
+<p>In this case, <code>num1</code> and <code>num2</code> get substituted with <code>1</code> and <code>2</code> respectively.  Within the body of the function, <code>1</code> gets assigned as the value held by  variable <code>a</code>, and <code>2</code> gets assigned as the value held by <code>b</code>.</p>
+
+<p>You can prove this is the case by changing the variable <em>within</em> the function, and then inspecting the variable that referred to the same value <em>outside</em> the function:</p>
+
+<div class="highlight"><pre><code class="javascript"><span class="kd">var</span> <span class="nx">inc</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">a</span><span class="p">){</span> <span class="nx">a</span> <span class="o">=</span> <span class="nx">a</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span> <span class="k">return</span> <span class="nx">a</span> <span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">num</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="nx">inc</span><span class="p">(</span><span class="nx">num</span><span class="p">)</span> 	<span class="c1">//= 2</span>
+<span class="nx">num</span> 		<span class="c1">//= 1</span>
+</code></pre></div>
+
+<p>The value assigned to a function’s parameter is <em>identical</em> to the value passed in.  We’ve already seen that that means that a variable gets the same value as far as primitives are concerned - but the same is true of objects.  This means that any change done by a function on that object will be seen when any other variable that refers to that object is inspected.</p>
+
+<div class="highlight"><pre><code class="javascript"><span class="c1">// takes an object, and adds the .isMutated property</span>
+<span class="kd">var</span> <span class="nx">mutate</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">o</span><span class="p">){</span> <span class="nx">o</span><span class="p">.</span><span class="nx">isMutated</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span> <span class="k">return</span> <span class="nx">o</span> <span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">myObject</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">x</span><span class="o">:</span> <span class="mi">3</span> <span class="p">}</span>
+
+<span class="nx">mutate</span><span class="p">(</span><span class="nx">myObject</span><span class="p">)</span> <span class="c1">//= { x: 3, isMutated: true}</span>
+<span class="nx">myObject</span>         <span class="c1">//= { x: 3, isMutated: true}</span>
+</code></pre></div>
+
+<p>This might trick you into thinking that the operation within <code>mutate</code> actually changed which value <code>myObject</code> holds - but the primitive example shows this is not the case; altering one <em>variable</em> does not affect another variable. it’s the value itself that gets mutated.</p>
+
+<h1 id="at-the-end-of-the-day">At the end of the day…</h1>
+
+<p>It’s possible that every dev knows this - and those that use the terms interchangably do so out of laziness.  I’m often convinced this is the case when I talk to people I know are fairly up-to-speed on other aspects of programming.</p>
+
+<p>Still, I think there’s a lot of value in separating the two concepts, because it leads to a far clearer understanding of what you have to worry about changing where.</p>
+
+<p>Deeper discussions need more crystal clearly defined terms - heaven knows we have the odds stacked against us by our choice of subject matter from time to time in any case.</p>
+
+      <hr />
+      <footer role="contentinfo">
+        <div class="article-author-bottom">
+          <img src="/images/bio-pic.jpeg" class="bio-photo" alt="Hugh Jackson bio photo"></a>
+<h3>Hugh Jackson</h3>
+<p>JS Devving, FP loving, NPM module authoring son-of-a-gun. Whipping up tech magic at @zeebox</p>
+<a href="http://twitter.com/hughfdjackson" class="author-social" target="_blank"><i class="icon-twitter"></i> Twitter</a>
+
+
+
+
+
+<a href="http://github.com/hughfdjackson" class="author-social" target="_blank"><i class="icon-github"></i> Github</a>
+
+
+
+
+
+
+        </div>
+        <p class="byline"><strong>Vars And Values</strong> was published on <time datetime="2013-01-04T00:00:00+00:00">January 04, 2013</time> by <a href="/about" title="About Hugh Jackson">Hugh Jackson</a>.</p>
+      </footer>
+    </div><!-- /.article-wrap -->
+  </article>
+</div><!-- /#main -->
+
+<div class="footer-wrap">
+  <div class="related-articles">
+  <h4>You might also enjoy <small class="pull-right">(<a href="/posts/">View all posts</a>)</small></h4>
+    <ul>
+    
+      <li><a href="/javascript/why-curry-helps/" title="Why Curry Helps">Why Curry Helps</a></li>
+    
+      <li><a href="/javascript/tapping-into-the-method-chain/" title="Tapping Into The Method Chain">Tapping Into The Method Chain</a></li>
+    
+      <li><a href="/javascript/jslint-is-not-a-code-quality-tool-for-3rd-party-code/" title="Jslint Is Not A Code Quality Tool For 3rd Party Code">Jslint Is Not A Code Quality Tool For 3rd Party Code</a></li>
+    
+    </ul>
+    <hr />
+  </div><!-- /.related-articles -->
+  <footer>
+    <span>&copy; 2014 Hugh Jackson. Powered by <a href="http://jekyllrb.com">Jekyll</a> using the <a href="http://mademistakes.com/minimal-mistakes/">Minimal Mistakes</a> theme.</span>
+
+  </footer>
+</div><!-- /.footer-wrap -->
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+<script src="/assets/js/scripts.min.js"></script>
+	        
+
+</body>
+</html>

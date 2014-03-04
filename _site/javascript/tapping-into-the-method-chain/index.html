@@ -1,0 +1,330 @@
+<!doctype html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]-->
+<!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<title>Tapping Into The Method Chain &#8211; Hugh FD Jackson -</title>
+<meta name="description" content="">
+<meta name="keywords" content="javascript, functional, object-orientated">
+<!-- Twitter Cards -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="/images/">
+<meta name="twitter:title" content="Tapping Into The Method Chain">
+<meta name="twitter:description" content="">
+<meta name="twitter:creator" content="@hughfdjackson">
+
+<!-- Open Graph -->
+<meta property="og:locale" content="en_US">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Tapping Into The Method Chain">
+<meta property="og:description" content="">
+<meta property="og:url" content="/javascript/tapping-into-the-method-chain/">
+<meta property="og:site_name" content="Hugh FD Jackson -">
+
+
+
+
+
+<link rel="canonical" href="/javascript/tapping-into-the-method-chain/">
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Hugh FD Jackson - Feed">
+
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Google Webfonts -->
+<link href='http://fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700|PT+Serif:400,700,400italic' rel='stylesheet' type='text/css'>
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.min.css">
+
+<meta http-equiv="cleartype" content="on">
+
+<!-- HTML5 Shiv and Media Query Support -->
+<!--[if lt IE 9]>
+	<script src="/assets/js/vendor/html5shiv.min.js"></script>
+	<script src="/assets/js/vendor/respond.min.js"></script>
+<![endif]-->
+
+<!-- Modernizr -->
+<script src="/assets/js/vendor/modernizr-2.7.1.custom.min.js"></script>
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="/favicon.ico">
+<!-- 32x32 -->
+<link rel="shortcut icon" href="/favicon.png">
+<!-- 57x57 (precomposed) for iPhone 3GS, pre-2011 iPod Touch and older Android devices -->
+<link rel="apple-touch-icon-precomposed" href="/images/apple-touch-icon-precomposed.png">
+<!-- 72x72 (precomposed) for 1st generation iPad, iPad 2 and iPad mini -->
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="/images/apple-touch-icon-72x72-precomposed.png">
+<!-- 114x114 (precomposed) for iPhone 4, 4S, 5 and post-2011 iPod Touch -->
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="/images/apple-touch-icon-114x114-precomposed.png">
+<!-- 144x144 (precomposed) for iPad 3rd and 4th generation -->
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="/images/apple-touch-icon-144x144-precomposed.png">
+
+</head>
+
+<body class="post">
+
+<!--[if lt IE 9]><div class="browser-upgrade alert alert-info">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div><![endif]-->
+
+<div class="navigation-wrapper">
+	<div class="site-name">
+		<a href="">Hugh FD Jackson -</a>
+	</div><!-- /.site-name -->
+	<div class="top-navigation">
+		<nav role="navigation" id="site-nav" class="nav">
+		    <ul>
+		        
+				<li><a href="/posts/" target="_blank">Posts</a></li>
+		        
+		    </ul>
+		</nav>
+	</div><!-- /.top-navigation -->
+</div><!-- /.navigation-wrapper -->
+
+
+
+<div id="main" role="main">
+  <div class="article-author-side">
+    <img src="/images/bio-pic.jpeg" class="bio-photo" alt="Hugh Jackson bio photo"></a>
+<h3>Hugh Jackson</h3>
+<p>JS Devving, FP loving, NPM module authoring son-of-a-gun. Whipping up tech magic at @zeebox</p>
+<a href="http://twitter.com/hughfdjackson" class="author-social" target="_blank"><i class="icon-twitter"></i> Twitter</a>
+
+
+
+
+
+<a href="http://github.com/hughfdjackson" class="author-social" target="_blank"><i class="icon-github"></i> Github</a>
+
+
+
+
+
+
+  </div>
+  <article>
+    <div class="headline-wrap">
+      <h1>Tapping Into The Method Chain</h1>
+    </div><!--/ .headline-wrap -->
+    <div class="article-wrap">
+      <p>Objects and methods are a big deal.  They’re the core way in which JavaScript defines functionality against a type; which is reflected in the standard library, in many of the libraries we choose to use, and how production code tends to be written (at least, in my experience).</p>
+
+<p>Compare these two solutions for returning the name of all the audiophiles in a contact book:</p>
+
+<div class="highlight"><pre><code class="javascript"><span class="kd">var</span> <span class="nx">contacts</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span> <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;Jen&#39;</span><span class="p">,</span> <span class="nx">interests</span><span class="o">:</span> <span class="p">[</span><span class="s1">&#39;audio&#39;</span><span class="p">,</span> <span class="s1">&#39;gaming&#39;</span><span class="p">,</span> <span class="s1">&#39;running&#39;</span><span class="p">]</span> <span class="p">},</span>
+    <span class="p">{</span> <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;Ben&#39;</span><span class="p">,</span> <span class="nx">interests</span><span class="o">:</span> <span class="p">[</span><span class="s1">&#39;skating&#39;</span><span class="p">,</span> <span class="s1">&#39;eating&#39;</span><span class="p">,</span> <span class="s1">&#39;tap-dancing&#39;</span><span class="p">]</span> <span class="p">},</span>
+    <span class="p">{</span> <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;Ken&#39;</span><span class="p">,</span> <span class="nx">interests</span><span class="o">:</span> <span class="p">[</span><span class="s1">&#39;partying&#39;</span><span class="p">,</span> <span class="s1">&#39;life in plastic&#39;</span><span class="p">,</span> <span class="s1">&#39;audio&#39;</span><span class="p">]</span> <span class="p">}</span>
+<span class="p">]</span>
+</code></pre></div>
+
+<p>A first-pass underscore solution might look something like this:</p>
+
+<div class="highlight"><pre><code class="javascript"><span class="kd">var</span> <span class="nx">audiophileP</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">contact</span><span class="p">){</span> <span class="k">return</span> <span class="nx">_</span><span class="p">.</span><span class="nx">contains</span><span class="p">(</span><span class="nx">contact</span><span class="p">.</span><span class="nx">interests</span><span class="p">,</span> <span class="s1">&#39;audio&#39;</span><span class="p">)</span> <span class="p">},</span>
+    <span class="nx">getName</span>     <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">contact</span><span class="p">){</span> <span class="k">return</span> <span class="nx">contact</span><span class="p">.</span><span class="nx">name</span> <span class="p">}</span>
+
+<span class="nx">_</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">_</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="nx">contacts</span><span class="p">,</span> <span class="nx">audiophileP</span><span class="p">),</span> <span class="nx">getName</span><span class="p">)</span>
+<span class="c1">//= [&quot;Jen&quot;, &quot;Ken&quot;]</span>
+</code></pre></div>
+
+<p>The same can be achieved by chaining native methods:</p>
+
+<div class="highlight"><pre><code class="javascript"><span class="nx">contacts</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="nx">audiophileP</span><span class="p">).</span><span class="nx">map</span><span class="p">(</span><span class="nx">getName</span><span class="p">)</span>
+<span class="c1">//= [&quot;Jen&quot;, &quot;Ken&quot;]</span>
+</code></pre></div>
+
+<p>The second is far cleaner, and easier to read; especially as transformations grow beyond a handful of steps.  Many libraries recognise this, providing APIs that are designed to be chained; commonly called Fluent APIs.  Underscore even ships its own version, allowing you to use all of underscores methods with any object, at the price of a little boilerplate:</p>
+
+<div class="highlight"><pre><code class="javascript"><span class="nx">_</span><span class="p">.</span><span class="nx">chain</span><span class="p">(</span><span class="nx">contacts</span><span class="p">).</span><span class="nx">filter</span><span class="p">(</span><span class="nx">audiophileP</span><span class="p">).</span><span class="nx">map</span><span class="p">(</span><span class="nx">getName</span><span class="p">).</span><span class="nx">value</span><span class="p">()</span>
+<span class="c1">//= [&quot;Jen&quot;, &quot;Ken&quot;]</span>
+</code></pre></div>
+
+<p>The ordering is clear, but the intent is somewhat obscured.</p>
+
+<h2 id="code-organisation-beyond-toy-examples">Code Organisation Beyond Toy Examples</h2>
+
+<p>In these examples, it’s clear that method chaining, either with native array methods, or a wrapped underscore object, is up to the job of generating reasonable, concise code.  The disparity between real-world use-cases and toy example is that real-world software <em>grows</em> as time goes on.  It grows a whole lot.</p>
+
+<p>Different use-cases often call for different behaviours against similar data, which leads to a proliferation of necessary moving parts; and need for reasonably concise, readable code is as great as ever.  The question of where to put this behaviour, and how to share it, is one of the essential debates in the nitty-gritty of software engineering.</p>
+
+<p>If we give the above transformation the name <code>getAudiophileNames</code>, we can see this debate in action:</p>
+
+<p>Object-Orientation would hold that the actions against the data should be shipped <em>with</em> the data.  Adding a <code>getAudiophileNames</code> method in es5 might look like this:</p>
+
+<div class="highlight"><pre><code class="javascript"><span class="kd">var</span> <span class="nx">contactsOO</span> <span class="o">=</span> <span class="nx">_</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span><span class="nx">contacts</span><span class="p">,</span> <span class="p">{</span>
+    <span class="nx">getAudiophileNames</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span>
+        <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="nx">audiophileP</span><span class="p">).</span><span class="nx">map</span><span class="p">(</span><span class="nx">getName</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">})</span>
+
+<span class="nx">contactsOO</span><span class="p">.</span><span class="nx">getAudiophileNames</span><span class="p">()</span>
+<span class="c1">//= [&quot;Jen&quot;, &quot;Ken&quot;]</span>
+</code></pre></div>
+
+<p>Note that we can compose these parts as easily as ever:</p>
+
+<div class="highlight"><pre><code class="javascript"><span class="kd">var</span> <span class="nx">yellString</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">string</span><span class="p">){</span> <span class="k">return</span> <span class="nx">string</span><span class="p">.</span><span class="nx">toUpperCase</span><span class="p">()</span> <span class="p">}</span>
+
+<span class="nx">contactsOO</span><span class="p">.</span><span class="nx">getAudiophileNames</span><span class="p">().</span><span class="nx">map</span><span class="p">(</span><span class="nx">yellString</span><span class="p">)</span>
+<span class="c1">//= [&quot;JEN&quot;, &quot;KEN&quot;]</span>
+</code></pre></div>
+
+<p>I find myself shying away from using methods as the default unit of work in my code; each essential data type has so many fundamental units of work associated with it, it would require adding methods of many different granularities to get the work done.  These methods would be globally available, which would increase the complexity of working with that object type across the code-base.  It also increases the risk of subtly breaking code elsewhere; especially if that code uses duck-typing to establish what kind of object it’s dealing with.</p>
+
+<p>Instead, a lot of work happens at the level of fine-grained functions (pure ones, as often as I can).  These functions are either generic and shared, or very specific and scoped within the area to which they specifically relate.  <code>getName</code> and <code>audiophileP</code> are two such examples, as is the following <code>getAudiophileNames</code> implementation.</p>
+
+<div class="highlight"><pre><code class="javascript"><span class="kd">var</span> <span class="nx">getAudiophileNames</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">people</span><span class="p">){</span>
+    <span class="k">return</span> <span class="nx">people</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="nx">audiophileP</span><span class="p">).</span><span class="nx">map</span><span class="p">(</span><span class="nx">getName</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>When used with chainable methods (such as <code>filter</code> and <code>map</code>), these work fantastically.  However, interoperability when using functions that take the <em>entire</em> object is more troublesome.  In most cases, it requires breaking the chain:</p>
+
+<div class="highlight"><pre><code class="javascript"><span class="kd">var</span> <span class="nx">evenP</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">num</span><span class="p">){</span> <span class="k">return</span> <span class="nx">num</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">},</span>
+    <span class="nx">capitalizeEven</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">letter</span><span class="p">,</span> <span class="nx">i</span><span class="p">){</span> <span class="k">return</span> <span class="nx">evenP</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span> <span class="o">?</span> <span class="nx">letter</span><span class="p">.</span><span class="nx">toUpperCase</span><span class="p">()</span> <span class="o">:</span> <span class="nx">letter</span> <span class="p">},</span>
+    <span class="nx">capitalizeEveryOtherLetter</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">string</span><span class="p">){</span>
+        <span class="k">return</span> <span class="nx">_</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">string</span><span class="p">,</span> <span class="nx">capitalizeEven</span><span class="p">).</span><span class="nx">join</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+    <span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">firstAudiophile</span> <span class="o">=</span> <span class="nx">getAudiophileNames</span><span class="p">(</span><span class="nx">contacts</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span>
+    <span class="nx">log</span> <span class="o">=</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="nx">console</span><span class="p">)</span>
+
+<span class="nx">log</span><span class="p">(</span><span class="nx">capitalizeEveryOtherLetter</span><span class="p">(</span><span class="nx">firstAudiophile</span><span class="p">))</span>
+<span class="c1">// &quot;JeN&quot;</span>
+<span class="c1">//= undefined</span>
+</code></pre></div>
+
+<h2 id="tapping-into-the-method-chain">Tapping into the Method Chain</h2>
+
+<p>Using functions in this way seperates the concerns about what we’re doing and where it’s available,  but it’s not nearly so easy to read.  One simple, but drastic, way to improve this can be fit into just one line (in a minimal implementation):</p>
+
+<div class="highlight"><pre><code class="javascript"><span class="nb">Object</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">tap</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">fn</span><span class="p">){</span> <span class="k">return</span> <span class="nx">fn</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">valueOf</span><span class="p">())</span> <span class="p">}</span>
+</code></pre></div>
+
+<p>This gives us the ability to clean up our example significantly:</p>
+
+<div class="highlight"><pre><code class="javascript"><span class="nx">contacts</span><span class="p">.</span><span class="nx">tap</span><span class="p">(</span><span class="nx">getAudiophileNames</span><span class="p">)</span>
+        <span class="p">.</span><span class="nx">tap</span><span class="p">(</span><span class="nx">_</span><span class="p">.</span><span class="nx">first</span><span class="p">)</span>
+        <span class="p">.</span><span class="nx">tap</span><span class="p">(</span><span class="nx">capitalizeEveryOtherLetter</span><span class="p">)</span>
+        <span class="p">.</span><span class="nx">tap</span><span class="p">(</span><span class="nx">log</span><span class="p">)</span>
+
+<span class="c1">// &quot;JeN&quot;</span>
+</code></pre></div>
+
+<p>Now we happily borrow functions and use them as though they were chained methods; meaning that we could write the entire transformation from front to back as an easy-to-follow chain:</p>
+
+<div class="highlight"><pre><code class="javascript"><span class="nx">contacts</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="nx">audiophileP</span><span class="p">)</span>
+        <span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">getName</span><span class="p">)</span>
+        <span class="p">.</span><span class="nx">tap</span><span class="p">(</span><span class="nx">_</span><span class="p">.</span><span class="nx">first</span><span class="p">)</span>
+        <span class="p">.</span><span class="nx">tap</span><span class="p">(</span><span class="nx">capitalizeEveryOtherLetter</span><span class="p">)</span>
+
+<span class="c1">//= &quot;JeN&quot;</span>
+</code></pre></div>
+
+<p>Compared to the equivalent, unbroken, naive functional equivalent:</p>
+
+<div class="highlight"><pre><code class="javascript"><span class="nx">capitalizeEveryOtherLetter</span><span class="p">(</span><span class="nx">getName</span><span class="p">(</span><span class="nx">_</span><span class="p">.</span><span class="nx">first</span><span class="p">(</span><span class="nx">_</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="nx">contacts</span><span class="p">,</span> <span class="nx">audiophileP</span><span class="p">))))</span>
+<span class="c1">//= &quot;JeN&quot;</span>
+</code></pre></div>
+
+<h3 id="taking-extra-arguments">Taking extra arguments</h3>
+
+<p>Many generic functions require more than a single argument; so it would extend <code>.tap</code>s usefulness to cater to these functions:</p>
+
+<div class="highlight"><pre><code class="javascript"><span class="nb">Object</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">tap</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">fn</span><span class="p">){</span>
+    <span class="kd">var</span> <span class="nx">val</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">valueOf</span><span class="p">()</span>
+    <span class="k">if</span> <span class="p">(</span> <span class="nx">arguments</span><span class="p">.</span><span class="nx">length</span> <span class="o">==</span> <span class="mi">1</span> <span class="p">)</span> <span class="k">return</span> <span class="nx">fn</span><span class="p">(</span><span class="nx">val</span><span class="p">)</span>
+
+    <span class="kd">var</span> <span class="nx">args</span> <span class="o">=</span> <span class="p">[].</span><span class="nx">slice</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">arguments</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nx">fn</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="p">[</span><span class="nx">val</span><span class="p">].</span><span class="nx">concat</span><span class="p">(</span><span class="nx">args</span><span class="p">))</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>Now there’s really no difference in flexibility between tapping a function into the method chain, and a regular method:</p>
+
+<div class="highlight"><pre><code class="javascript"><span class="kd">var</span> <span class="nx">shallowExtend</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">o</span><span class="p">,</span> <span class="nx">o2</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="p">(</span> <span class="kd">var</span> <span class="nx">p</span> <span class="k">in</span> <span class="nx">o2</span> <span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span> <span class="nx">o2</span><span class="p">.</span><span class="nx">hasOwnProperty</span><span class="p">(</span><span class="nx">p</span><span class="p">)</span> <span class="p">)</span> <span class="nx">o</span><span class="p">[</span><span class="nx">p</span><span class="p">]</span> <span class="o">=</span> <span class="nx">o2</span><span class="p">[</span><span class="nx">p</span><span class="p">]</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">o</span>
+<span class="p">}</span>
+
+<span class="nx">contacts</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="nx">audiophileP</span><span class="p">)</span>
+        <span class="p">.</span><span class="nx">tap</span><span class="p">(</span><span class="nx">_</span><span class="p">.</span><span class="nx">last</span><span class="p">)</span>
+        <span class="p">.</span><span class="nx">tap</span><span class="p">(</span><span class="nx">shallowExtend</span><span class="p">,</span> <span class="p">{</span> <span class="nx">friendType</span><span class="o">:</span> <span class="s1">&#39;bestest&#39;</span> <span class="p">})</span>
+        <span class="p">.</span><span class="nx">tap</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">)</span>
+
+<span class="c1">//= &quot;{&quot;name&quot;:&quot;Ken&quot;,&quot;interests&quot;:[&quot;partying&quot;,&quot;life in plastic&quot;,&quot;audio&quot;],&quot;friendType&quot;:&quot;bestest&quot;}&quot;</span>
+</code></pre></div>
+
+<h2 id="trade-offs-and-dragons">Trade-Offs and Dragons</h2>
+
+<p>Normally, touching the global objects, let alone prototypes, raises the hackles of any serious JavaScripter.  This is for good reason; it impacts <em>all</em> code; yours, your libraries, your users; everyone will have .tap.  Also, in older browsers, we don’t have the option to specify that the method should be non-enumerable, so there’s risk of it showing up in loops, or using functions like <code>_.extend</code>.  Finally, since duck-typing is the defacto way to specify interface constraints in JavaScript, adding this method risks subtle breakages.</p>
+
+<p>However, if there ever <em>was</em> a good case for offending this well-honed sensibility, I think that a <code>tap</code>-like method has it.  JavaScript is essentially built on two behaviour sharing mechanisms; first-class functions and objects.  At the moment, interoperability in a clean, consistent way isn’t supported out of the box.</p>
+
+<p>At the price of one global method, we’ve basically separated the concerns of concise, readable code and the scope of a unit of of work: functions hidden or shared as needed, vs a method always tied to an object type globally.</p>
+
+<h2 id="edit-a-real-implementation">EDIT: A Real Implementation</h2>
+
+<p>An implemenetion of this is available on <a href="https://github.com/hughfdjackson/tap">github</a> and <a href="https://npmjs.org/package/tap-chain">npm</a>.  Notably, this implementation <em>does not</em> change the global object (or any others).  Instead, it provides a <code>mixin</code> function that adds tap to an object passed in (making the property non-enumerable if possible).</p>
+
+      <hr />
+      <footer role="contentinfo">
+        <div class="article-author-bottom">
+          <img src="/images/bio-pic.jpeg" class="bio-photo" alt="Hugh Jackson bio photo"></a>
+<h3>Hugh Jackson</h3>
+<p>JS Devving, FP loving, NPM module authoring son-of-a-gun. Whipping up tech magic at @zeebox</p>
+<a href="http://twitter.com/hughfdjackson" class="author-social" target="_blank"><i class="icon-twitter"></i> Twitter</a>
+
+
+
+
+
+<a href="http://github.com/hughfdjackson" class="author-social" target="_blank"><i class="icon-github"></i> Github</a>
+
+
+
+
+
+
+        </div>
+        <p class="byline"><strong>Tapping Into The Method Chain</strong> was published on <time datetime="2012-11-30T00:00:00+00:00">November 30, 2012</time> by <a href="/about" title="About Hugh Jackson">Hugh Jackson</a>.</p>
+      </footer>
+    </div><!-- /.article-wrap -->
+  </article>
+</div><!-- /#main -->
+
+<div class="footer-wrap">
+  <div class="related-articles">
+  <h4>You might also enjoy <small class="pull-right">(<a href="/posts/">View all posts</a>)</small></h4>
+    <ul>
+    
+      <li><a href="/javascript/why-curry-helps/" title="Why Curry Helps">Why Curry Helps</a></li>
+    
+      <li><a href="/javascript/vars-and-values/" title="Vars And Values">Vars And Values</a></li>
+    
+      <li><a href="/javascript/jslint-is-not-a-code-quality-tool-for-3rd-party-code/" title="Jslint Is Not A Code Quality Tool For 3rd Party Code">Jslint Is Not A Code Quality Tool For 3rd Party Code</a></li>
+    
+    </ul>
+    <hr />
+  </div><!-- /.related-articles -->
+  <footer>
+    <span>&copy; 2014 Hugh Jackson. Powered by <a href="http://jekyllrb.com">Jekyll</a> using the <a href="http://mademistakes.com/minimal-mistakes/">Minimal Mistakes</a> theme.</span>
+
+  </footer>
+</div><!-- /.footer-wrap -->
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+<script src="/assets/js/scripts.min.js"></script>
+	        
+
+</body>
+</html>

@@ -1,0 +1,331 @@
+<!doctype html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]-->
+<!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<title>Jslint Is Not A Code Quality Tool For 3rd Party Code &#8211; Hugh FD Jackson -</title>
+<meta name="description" content="">
+<meta name="keywords" content="javascript, jslint, doug, crockford">
+<!-- Twitter Cards -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="/images/">
+<meta name="twitter:title" content="Jslint Is Not A Code Quality Tool For 3rd Party Code">
+<meta name="twitter:description" content="">
+<meta name="twitter:creator" content="@hughfdjackson">
+
+<!-- Open Graph -->
+<meta property="og:locale" content="en_US">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Jslint Is Not A Code Quality Tool For 3rd Party Code">
+<meta property="og:description" content="">
+<meta property="og:url" content="/javascript/jslint-is-not-a-code-quality-tool-for-3rd-party-code/">
+<meta property="og:site_name" content="Hugh FD Jackson -">
+
+
+
+
+
+<link rel="canonical" href="/javascript/jslint-is-not-a-code-quality-tool-for-3rd-party-code/">
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Hugh FD Jackson - Feed">
+
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Google Webfonts -->
+<link href='http://fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700|PT+Serif:400,700,400italic' rel='stylesheet' type='text/css'>
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.min.css">
+
+<meta http-equiv="cleartype" content="on">
+
+<!-- HTML5 Shiv and Media Query Support -->
+<!--[if lt IE 9]>
+	<script src="/assets/js/vendor/html5shiv.min.js"></script>
+	<script src="/assets/js/vendor/respond.min.js"></script>
+<![endif]-->
+
+<!-- Modernizr -->
+<script src="/assets/js/vendor/modernizr-2.7.1.custom.min.js"></script>
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="/favicon.ico">
+<!-- 32x32 -->
+<link rel="shortcut icon" href="/favicon.png">
+<!-- 57x57 (precomposed) for iPhone 3GS, pre-2011 iPod Touch and older Android devices -->
+<link rel="apple-touch-icon-precomposed" href="/images/apple-touch-icon-precomposed.png">
+<!-- 72x72 (precomposed) for 1st generation iPad, iPad 2 and iPad mini -->
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="/images/apple-touch-icon-72x72-precomposed.png">
+<!-- 114x114 (precomposed) for iPhone 4, 4S, 5 and post-2011 iPod Touch -->
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="/images/apple-touch-icon-114x114-precomposed.png">
+<!-- 144x144 (precomposed) for iPad 3rd and 4th generation -->
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="/images/apple-touch-icon-144x144-precomposed.png">
+
+</head>
+
+<body class="post">
+
+<!--[if lt IE 9]><div class="browser-upgrade alert alert-info">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div><![endif]-->
+
+<div class="navigation-wrapper">
+	<div class="site-name">
+		<a href="">Hugh FD Jackson -</a>
+	</div><!-- /.site-name -->
+	<div class="top-navigation">
+		<nav role="navigation" id="site-nav" class="nav">
+		    <ul>
+		        
+				<li><a href="/posts/" target="_blank">Posts</a></li>
+		        
+		    </ul>
+		</nav>
+	</div><!-- /.top-navigation -->
+</div><!-- /.navigation-wrapper -->
+
+
+
+<div id="main" role="main">
+  <div class="article-author-side">
+    <img src="/images/bio-pic.jpeg" class="bio-photo" alt="Hugh Jackson bio photo"></a>
+<h3>Hugh Jackson</h3>
+<p>JS Devving, FP loving, NPM module authoring son-of-a-gun. Whipping up tech magic at @zeebox</p>
+<a href="http://twitter.com/hughfdjackson" class="author-social" target="_blank"><i class="icon-twitter"></i> Twitter</a>
+
+
+
+
+
+<a href="http://github.com/hughfdjackson" class="author-social" target="_blank"><i class="icon-github"></i> Github</a>
+
+
+
+
+
+
+  </div>
+  <article>
+    <div class="headline-wrap">
+      <h1>Jslint Is Not A Code Quality Tool For 3rd Party Code</h1>
+    </div><!--/ .headline-wrap -->
+    <div class="article-wrap">
+      <p>Doug Crockford’s <a href="http://www.jslint.com">JSLint</a> performs static analysis on Javascript, returning a list of what Crockford considers to be violations of best practice.  Contrary to the assertions of its creator, however, it is <strong>not</strong> a fit tool by which to judge the quality of 3rd party code.</p>
+
+<h3 id="crockfords-assertion">Crockford’s Assertion</h3>
+
+<p>Crockford is an opinionated, experienced and charismatic guy.  As such people often do, he has gained significant influence.  In this post, I’m going to focus on what Crockford thinks the role of JSLint is, as typified by this <a href="http://therichwebexperience.com/blog/douglas_crockford/2006/05/choose_your_ajax">suggestion</a>:</p>
+
+<blockquote>
+  <p>“There is one reliable, objective metric of JavaScript code quality that can help you in making your choice <em>[… of library …]</em>: JSLint. If JSLint finds problems in a library, then dump it and move on to the next one.”</p>
+</blockquote>
+
+<p>I firmly believe that this attitude is damaging; and worth focusing on given his potential influence.</p>
+
+<h1 id="jslints-mechanism-and-limitations">1. JSLint’s Mechanism and Limitations</h1>
+
+<p>JSLint enforces Crockford’s list of <em>suggested practices</em>, where <em>suggested practice</em> can be defined as:</p>
+
+<blockquote>
+  <p>“A <em>suggested practice</em> is a rule of thumb to aid in the avoidance of a problem or problems”</p>
+</blockquote>
+
+<p>Notice, the definition deliberately does not imply that this rule of thumb is the only effective one.  In software development, that’s a cat you can skin many ways.  It’s for that very reason the phrase <em>best practice</em>, which implies a solution’s monopoly, has been avoided.</p>
+
+<h3 id="a-case-study-in-the-diversity-of-suggested-practice">1.1 A Case Study in the Diversity of Suggested Practice</h3>
+
+<p>Javascript has a system of Automatic Semicolon-Insertion (ASI).  A Javascript engine will analyse the code that has been written, and follows a set of rules to determine if a statement has ended wherever it encounters a new line.  This lets you omit semicolons in many instances.</p>
+
+<p>However, Javascript’s ASI can confuse newcomers (and some experienced developers too). For instance, this:</p>
+
+<div class="highlight"><pre><code class="javascript"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;hi&#39;</span><span class="p">)</span>
+
+<span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;there&#39;</span><span class="p">)</span>
+<span class="p">})</span>
+</code></pre></div>
+
+<p>will be interpreted as this:</p>
+
+<div class="highlight"><pre><code class="javascript"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;hi&#39;</span><span class="p">)(</span><span class="kd">function</span><span class="p">(){</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;there&#39;</span><span class="p">)</span>
+<span class="p">})()</span>
+</code></pre></div>
+
+<p>Crockford’s <em>suggested practice</em> is to avoid this problem by never using newline to <em>imply</em> a semicolon:</p>
+
+<div class="highlight"><pre><code class="javascript"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;hi&#39;</span><span class="p">);</span>
+
+<span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;there&#39;</span><span class="p">);</span>
+<span class="p">})()</span>
+</code></pre></div>
+
+<p>However, you could achieve the same thing using a different <em>suggested practice</em>:</p>
+
+<div class="highlight"><pre><code class="javascript"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;hi&#39;</span><span class="p">)</span>
+
+<span class="k">void</span> <span class="kd">function</span><span class="p">(){</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;there&#39;</span><span class="p">)</span>
+<span class="p">}()</span>
+</code></pre></div>
+
+<p>Both practices will reliably produce the same results, across es3-5 supporting engines.  That covers every engine commonly in use today.</p>
+
+<h3 id="the-grey-areas">1.2 The Grey Areas</h3>
+
+<p>Not least amongst the limitations of JSLint as a judge of 3rd party code quality is the debatable nature of many of JSLint’s restrictions.  For instance, Crockford eschews braceless, single-line <code>if</code> statements, such as:</p>
+
+<div class="highlight"><pre><code class="javascript">    <span class="kd">var</span> <span class="nx">foo</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="nx">foo</span> <span class="o">===</span> <span class="kc">true</span><span class="p">)</span> <span class="nx">foo</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+</code></pre></div>
+
+<p>The argument is that Javascript users, especially inexperienced ones, are liable to forget that they cannot have more than one statement in the body of a brace-less <code>if</code> statement.  A counter argument may state that familiarity with the language’s semantics mitigates this risk, and that the reduction of visual clutter can lead to easier maintenance; an argument that personal experience bears out.</p>
+
+<h3 id="a-note-on-optional-parameters">1.3 A Note On Optional Parameters</h3>
+
+<p>If it is assumed that Crockford’s suggestion implied code should be ‘quality checked’ in JSLint with its default options, a myriad of purely aesthetic constraints are applied as well.  For instance, of the three following <code>if statements</code>, <em>only one is acceptable in JSLint</em>:</p>
+
+<div class="highlight"><pre><code class="javascript"><span class="kd">var</span> <span class="nx">foo</span> <span class="o">=</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="nx">bar</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+
+<span class="k">if</span> <span class="p">(</span><span class="nx">foo</span> <span class="o">===</span> <span class="kc">true</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">bar</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">if</span> <span class="p">(</span><span class="nx">foo</span> <span class="o">===</span> <span class="kc">true</span><span class="p">){</span>
+    <span class="nx">bar</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">if</span> <span class="p">(</span> <span class="nx">foo</span> <span class="o">===</span> <span class="kc">true</span> <span class="p">)</span> <span class="p">{</span>
+    <span class="nx">bar</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>Also note that reformatting the variable definitions will cause an error in JSLint:</p>
+
+<div class="highlight"><pre><code class="javascript"><span class="kd">var</span> <span class="nx">foo</span> <span class="o">=</span> <span class="kc">true</span>
+  <span class="p">,</span> <span class="nx">bar</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+</code></pre></div>
+
+<p>Whereas other <em>suggested practices</em> have been intended to guide the user from ‘gotchas’, these simply enforce the style preferences of JSLint’s creator.</p>
+
+<h3 id="global-detection-in-jslint">1.4 Global Detection in JSLint</h3>
+
+<p>In spite of the reservations expressed above, JSLint does offer the potential to detect, and warn about, global variables added by any means.</p>
+
+<h1 id="the-potential-damage-of-treating-jslint-as-an-enforcer-of-best-practices">2. The Potential Damage of Treating JSLint as an Enforcer of Best Practices</h1>
+
+<p>In section 1, passing mention was made of the concept of <em>best practice</em> in relation to JSLint’s role.  It was noted there that <em>suggested practice</em> was a more applicable label.  However, Crockford’s comment suggest that he <em>does</em> regard the rules JSLint enforces as <em>best practices</em>.  The comments of his adherents in public forums often suggests that this is the way in which they view his suggestions.</p>
+
+<p>This worries me deeply, for the following reasons:</p>
+
+<h4 id="discarding-good-libraries">2.1 Discarding Good Libraries</h4>
+
+<p>The most obvious danger is that internally consistent code with robust behaviour will be discarded without due cause.  It may surprise some to know, for instance, that <a href="http://docs.jquery.com/JQuery_Core_Style_Guidelines#JSLint">jQuery fails Crockford’s acid test</a>.</p>
+
+<h3 id="ignorance-in-the-community-about-javascript">2.2 Ignorance in the Community About Javascript</h3>
+
+<p>The phrase <em>best practice</em> is interpreted by some as license to not learn the different sides of any given debate.  This may lead to a misunderstanding of language features such as ASI, and even including <code>with</code> and <code>eval</code>.  Unfortunately, this does not appear to be uncommon.</p>
+
+<h3 id="causing-stagnation-in-suggested-practices">2.3 Causing Stagnation in <em>Suggested Practices</em></h3>
+
+<p>If running libraries through JSLint becomes common practice, any library hoping to obtain users must adhere strictly its suggestions, <em>even against the better judgement of the author(s)</em>.</p>
+
+<h1 id="better-practices-in-choosing-libraries">3. Better Practices In Choosing Libraries</h1>
+
+<p>In lieu of using the approach Crockford proposes, the following is suggested:</p>
+
+<h3 id="test-suites-as-a-means-to-judge-code-quality">3.1 Test Suites as a Means to Judge Code Quality</h3>
+
+<p>Not only does JSLint enforce a suite of practices that range from personal taste to one possible solution amongst many, it does not enforce the quality that is of prime importance in any library; namely, that is behaves as you desire on the platforms required.</p>
+
+<p>A far superior filter is a comprehensive suite of tests that can be inspected and run.  These act as both a description of the behaviour of a library and executable assurance that it performs as advertised.  </p>
+
+<h3 id="environmental-impact">3.2 Environmental Impact</h3>
+
+<p>One possible interesting metric is the number of global variables/properties a library adds, or the number/nature of properties added to native or host object/their prototypes.  As mentioned above, this is one use case in which JSLint can help retrieve useful information.</p>
+
+<h3 id="documentation-community-and-code-readability">3.3 Documentation, Community and Code Readability</h3>
+
+<p>If you can find an active community surrounding a library, or the documentation is clear and consistent, the time and frustration saved can be significant.  Sometimes code is the best documentation, so code that you find readable is a plus.</p>
+
+<h3 id="active-maintenance">3.4 Active Maintenance</h3>
+
+<p>Look for signs that the project is being actively maintained, since it increases the chance that problems can be resolved as they arise.</p>
+
+<h3 id="reputation">3.5 Reputation</h3>
+
+<p>A crude, but often useful metric.  A popular library will have more written about it - both good and bad, making it easier for you to inform your choice.  It is also likely to behave consistently, as unreliable libraries are likely not to have survived the darwinian gauntlet of public opinion.</p>
+
+<h1 id="conclusion">4. Conclusion</h1>
+
+<p>JSLint is not a tool without a purpose.  You may use it as a way to adhere to Doug’s <em>suggested practices</em>, and so aid in avoiding those pitfalls.  It’s also potentially worth considering in order to keep the coding style of a team consistent.</p>
+
+<p>However, despite Doug’s claims, it is <em>not</em> suitable for judging the quality of other people’s code.</p>
+
+<p>Nor is it a substitute for testing the behaviour of your programs.</p>
+
+<p>Nor does it exempt you from learning about the language in which you’re writing.</p>
+
+<hr />
+
+<p><strong>Edit:</strong> Removed the link to JSHint, as per <a href="http://news.ycombinator.com/item?id=3585186">this comment</a></p>
+
+      <hr />
+      <footer role="contentinfo">
+        <div class="article-author-bottom">
+          <img src="/images/bio-pic.jpeg" class="bio-photo" alt="Hugh Jackson bio photo"></a>
+<h3>Hugh Jackson</h3>
+<p>JS Devving, FP loving, NPM module authoring son-of-a-gun. Whipping up tech magic at @zeebox</p>
+<a href="http://twitter.com/hughfdjackson" class="author-social" target="_blank"><i class="icon-twitter"></i> Twitter</a>
+
+
+
+
+
+<a href="http://github.com/hughfdjackson" class="author-social" target="_blank"><i class="icon-github"></i> Github</a>
+
+
+
+
+
+
+        </div>
+        <p class="byline"><strong>Jslint Is Not A Code Quality Tool For 3rd Party Code</strong> was published on <time datetime="2012-02-12T00:00:00+00:00">February 12, 2012</time> by <a href="/about" title="About Hugh Jackson">Hugh Jackson</a>.</p>
+      </footer>
+    </div><!-- /.article-wrap -->
+  </article>
+</div><!-- /#main -->
+
+<div class="footer-wrap">
+  <div class="related-articles">
+  <h4>You might also enjoy <small class="pull-right">(<a href="/posts/">View all posts</a>)</small></h4>
+    <ul>
+    
+      <li><a href="/javascript/why-curry-helps/" title="Why Curry Helps">Why Curry Helps</a></li>
+    
+      <li><a href="/javascript/vars-and-values/" title="Vars And Values">Vars And Values</a></li>
+    
+      <li><a href="/javascript/tapping-into-the-method-chain/" title="Tapping Into The Method Chain">Tapping Into The Method Chain</a></li>
+    
+    </ul>
+    <hr />
+  </div><!-- /.related-articles -->
+  <footer>
+    <span>&copy; 2014 Hugh Jackson. Powered by <a href="http://jekyllrb.com">Jekyll</a> using the <a href="http://mademistakes.com/minimal-mistakes/">Minimal Mistakes</a> theme.</span>
+
+  </footer>
+</div><!-- /.footer-wrap -->
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+<script src="/assets/js/scripts.min.js"></script>
+	        
+
+</body>
+</html>
